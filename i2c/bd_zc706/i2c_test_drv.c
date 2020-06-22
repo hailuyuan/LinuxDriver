@@ -49,23 +49,16 @@ static int i2c_test_drv_probe(struct i2c_client *client,
 
 
 
-   set_val             =     0xf6;                     /*0xf5  = 0x75*/
-  struct i2c_msg r_msgs[2] =
-  {
-      {.addr = 0x39, .len = 1, .buf = (uint8_t *)&set_val},
-      {.addr = 0x39, .flags = I2C_M_RD, .len = 1, .buf=&ctl_reg}
-  };
+    pid_reg             =     0xf6;                      /*0xf5  = 0x75*/
 
- 
-	// test_msg[1].addr    =     0x39;   
-	// test_msg[1].buf     =     &set_val;
-    // test_msg[1].len     =     1;
-	 
-   
-	// test_msg[0].addr    =     0x39;   
-	// test_msg[0].flags   =     I2C_M_RD;  
-	// test_msg[0].buf     =     &ctl_reg;
-	// test_msg[0].len     =     1;
+	test_msg[1].addr    =     0x39;   
+	test_msg[1].buf     =     &set_val;
+    test_msg[1].len     =     1;
+	
+	test_msg[0].addr    =     0x39;   
+	test_msg[0].flags   =     I2C_M_RD;  
+	test_msg[0].buf     =     &ctl_reg;
+	test_msg[0].len     =     1;
 	i2c_transfer(adapter,r_msgs,2);              /*读取ADV7511PID寄存器*/
 
 	data.byte=0x40;
@@ -99,7 +92,7 @@ MODULE_DEVICE_TABLE(i2c, i2c_test_drv_idtable);
 static struct i2c_driver i2c_test_drv = {
 	.driver		= {
 		.owner		= THIS_MODULE,
-		.name		= "i2c_test_example",                   /*这里的名字不重要*/
+		.name		= "i2c_test_example",                    /*这里的名字不重要*/
 	},
 	.id_table	= i2c_test_drv_idtable,
 	.probe		= i2c_test_drv_probe,
